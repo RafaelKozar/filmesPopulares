@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Filme Populares</string>
+    <string name="KEY_API">8d7432a4c06f7011ce1943c827522a1e</string>
+    <string name="title_activity_movie_detail">MovieDetail</string>
+    <string name="title_popular">Populares</string>
+    <string name="title_top_rated">Melhores avaliados</string>
+    <string name="title_reviews">Reviews</string>
+    <string name="title_favorites">Meus favoritos</string>
+    <string name="mensagem_marcado_favorito">Filme marcado como favorito</string>
+    <string name="mensagem_desmarcar_favorito">Filme desmarcado como favorito</string>
+    <string name="mensagem_erro_conexao">Sem conexão com a internet</string>
+    <string name="texto_nota">Nota: %s</string>
+    <string name="texto_repetir">Repetir</string>
+</resources>

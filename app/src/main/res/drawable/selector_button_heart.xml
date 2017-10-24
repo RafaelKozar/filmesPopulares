@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"
+        android:backgroundTint="@color/colorPrimaryLight"
+        android:drawable="@drawable/img_favorito" />
+    <item  android:state_pressed="false"
+        android:drawable="@drawable/img_favorito" />
+    <item android:drawable="@drawable/img_favorito"></item>
+</selector>

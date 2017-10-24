@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filme_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:weightSum="10"
+    android:layout_margin="2dp"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+
+        >
+
+        <ProgressBar
+            android:id="@+id/loading_filme"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/image_movie_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/imgteste" />
+
+
+    </FrameLayout>
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+
+        android:background="@color/colorGray">
+
+        <TextView
+            android:id="@+id/nome_filme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_normal"
+            android:maxLength="13"
+            android:layout_gravity="left|center"
+            android:text="teste"
+
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            tools:text="IntereEstelar"/>
+
+        <ImageView
+            android:id="@+id/button_favoritar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center|right"
+            tools:src="@drawable/img_favorito" />
+
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
