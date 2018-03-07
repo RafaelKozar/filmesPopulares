@@ -1,6 +1,7 @@
 package com.example.android.filmepopulares.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.example.android.filmepopulares.R;
 import com.example.android.filmepopulares.contentprovider.FilmesContract;
 import com.example.android.filmepopulares.dao.MovieDAO;
@@ -50,6 +53,10 @@ public class AdapterFilmes extends RecyclerView.Adapter<AdapterFilmes.FilmesAdap
     @Override
     public void onBindViewHolder(final FilmesAdapterViewHolder holder, final int position) {
         final Movie filme = filmes.get(position);
+
+//        Glide.with(holder.context).load(filme.getUrlImage())
+//                .thumbnail(Glide.with(holder.context).load(R.drawable.loading))
+//                .into(holder.imageView);   Nao funciona
         holder.imageView.setImageBitmap(filme.getBitmap());
         holder.nomeFilme.setText(filme.getTitle());
         Uri uri = FilmesContract.FilmeEntry.CONTENT_URI;

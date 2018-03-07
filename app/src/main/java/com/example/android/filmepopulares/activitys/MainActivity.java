@@ -7,6 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +22,8 @@ import com.example.android.filmepopulares.connection.NetworkConnection;
 import com.example.android.filmepopulares.R;
 import com.example.android.filmepopulares.adapters.AdapterFilmes;
 import com.example.android.filmepopulares.model.Movie;
+import com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
         AsyncTaskDelegate{
     private List<Movie> resultsFilmes;
     private RecyclerView recyclerView;
+    private MultiSnapRecyclerView multiSnapRecyclerView;
     private AdapterFilmes adapter;
     private CoordinatorLayout coordinatorLayout;
     private MovieDAO movieDAO;
@@ -49,17 +53,20 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
         setContentView(R.layout.activity_main);
 
         recyclerView = (RecyclerView) findViewById(R.id.listafilmes);
+//        multiSnapRecyclerView = (MultiSnapRecyclerView) findViewById(R.id.listafilmes);
         loadingFilmes = (ProgressBar) findViewById(R.id.loading_filmes);
         loadingFilmes.setVisibility(View.VISIBLE);
-        GridLayoutManager layoutManger =  new GridLayoutManager(this, 2);
-        layoutManger.setOrientation(VERTICAL);
-        layoutManger.setSpanCount(2);
-
+//        GridLayoutManager layoutManger =  new GridLayoutManager(this, 2);
+        LinearLayoutManager layoutManger = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        layoutManger.setOrientation(VERTICAL);
+        //layoutManger.setSpanCount(2);
+//          multiSnapRecyclerView.setLayoutManager(layoutManger);
         recyclerView.setLayoutManager(layoutManger);
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
 
         adapter = new AdapterFilmes(this);
         recyclerView.setAdapter(adapter);
+//        multiSnapRecyclerView.setAdapter(adapter);
 
         movieDAO = new MovieDAO(this);
         try {
@@ -130,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
 
     public void makeRequisition(String string, int id) throws MalformedURLException {
         loadingFilmes.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
+      //  recyclerView.setVisibility(View.INVISIBLE);
         Bundle bundle = new Bundle();
         bundle.putString("url", string);
         new MovieService(this, getSupportLoaderManager(), bundle, id);
@@ -155,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
             resultsFilmes = filmes;
             adapter.setFilmes(resultsFilmes);
             loadingFilmes.setVisibility(View.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
+           // recyclerView.setVisibility(View.VISIBLE);
         }else{
             try {
                 carregarFilmes();
