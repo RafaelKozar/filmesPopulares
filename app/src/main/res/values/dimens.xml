@@ -8,5 +8,6 @@
     <dimen name="font_large">24sp</dimen>
     <dimen name="font_normal">21sp</dimen>
     <dimen name="font_small">15sp</dimen>
+    <dimen name="card_padding">100dp</dimen>
 
 </resources>

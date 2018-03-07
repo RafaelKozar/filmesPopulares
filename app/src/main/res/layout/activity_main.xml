@@ -26,8 +26,16 @@
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:id="@+id/lista_filme_view_pager"></android.support.v4.view.ViewPager>
+        android:layout_height="330dp"
+        android:layout_gravity="center"
+        android:id="@+id/lista_filme_view_pager"
+        android:paddingBottom="30dp"
+        android:clipToPadding="false"
+
+        android:paddingEnd="@dimen/card_padding"
+        android:paddingLeft="@dimen/card_padding"
+        android:paddingRight="@dimen/card_padding"
+        android:paddingStart="@dimen/card_padding" />
+
+
 </android.support.design.widget.CoordinatorLayout>
