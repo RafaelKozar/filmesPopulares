@@ -8,7 +8,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,19 +21,20 @@ import com.example.android.filmepopulares.contentprovider.FilmesContract;
 import com.example.android.filmepopulares.dao.MovieDAO;
 import com.example.android.filmepopulares.interfaces.AsyncTaskDelegate;
 import com.example.android.filmepopulares.model.CardItem;
+import com.example.android.filmepopulares.recursos.FeedProcessor;
 import com.example.android.filmepopulares.recursos.ShadowTransformer;
 import com.example.android.filmepopulares.services.MovieService;
 import com.example.android.filmepopulares.connection.NetworkConnection;
 import com.example.android.filmepopulares.R;
 import com.example.android.filmepopulares.adapters.AdapterFilmes;
 import com.example.android.filmepopulares.model.Movie;
-import com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView;
+
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v7.widget.LinearLayoutManager.*;
+import static com.example.android.filmepopulares.recursos.FeedProcessor.convertDpToPixel;
 
 /**
  * Desconsiderar a primeira vez que enviei este projeto, pois mandei o errado :(
@@ -42,13 +42,14 @@ import static android.support.v7.widget.LinearLayoutManager.*;
 
 public class MainActivity extends AppCompatActivity implements AdapterFilmes.clickFilme,
         AsyncTaskDelegate{
-    private List<Movie> resultsFilmes;
     private RecyclerView recyclerView;
-    private MultiSnapRecyclerView multiSnapRecyclerView;
+    private AdapterFilmes adapter;
+
+    private List<Movie> resultsFilmes;
     private CardPagerAdapter mCardFilmeAdapter;
     private ShadowTransformer mCardShadowTransformer;
     private ViewPager mViewPager;
-    private AdapterFilmes adapter;
+
     private CoordinatorLayout coordinatorLayout;
     private MovieDAO movieDAO;
     public ProgressBar loadingFilmes;
@@ -61,13 +62,15 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        recyclerView = (RecyclerView) findViewById(R.id.listafilmes);
-//        multiSnapRecyclerView = (MultiSnapRecyclerView) findViewById(R.id.listafilmes);
+
         mViewPager = (ViewPager) findViewById(R.id.lista_filme_view_pager);
         loadingFilmes = (ProgressBar) findViewById(R.id.loading_filmes);
         loadingFilmes.setVisibility(View.VISIBLE);
+
+//        LinearLayoutManager layoutManger = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerView = (RecyclerView) findViewById(R.id.listafilmes);
+//        multiSnapRecyclerView = (MultiSnapRecyclerView) findViewById(R.id.listafilmes);
 //        GridLayoutManager layoutManger =  new GridLayoutManager(this, 2);
-        LinearLayoutManager layoutManger = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 //        layoutManger.setOrientation(VERTICAL);
         //layoutManger.setSpanCount(2);
 //          multiSnapRecyclerView.setLayoutManager(layoutManger);
@@ -75,9 +78,10 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
 //        recyclerView.setHasFixedSize(true);
 
 //        adapter = new AdapterFilmes(this);
-        mCardFilmeAdapter = new CardPagerAdapter();
 //        recyclerView.setAdapter(adapter);
 //        multiSnapRecyclerView.setAdapter(adapter);
+        mCardFilmeAdapter = new CardPagerAdapter();
+
 
         movieDAO = new MovieDAO(this);
         try {
@@ -172,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
             resultsFilmes = new ArrayList<Movie>();
             resultsFilmes = filmes;
 //            adapter.setFilmes(resultsFilmes);
-
            // recyclerView.setVisibility(View.VISIBLE);
             for (int tam = filmes.size(), i =0; i < tam; i++) {
                 mCardFilmeAdapter.addCardItem(new CardItem(
@@ -185,7 +188,9 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
             mViewPager.setAdapter(mCardFilmeAdapter);
             mViewPager.setPageTransformer(false, mCardShadowTransformer);
             mViewPager.setOffscreenPageLimit(3);
+            setPaddingViewPager();
             loadingFilmes.setVisibility(View.INVISIBLE);
+            mCardShadowTransformer.enableScaling(true);
         }else{
             try {
                 carregarFilmes();
@@ -204,6 +209,27 @@ public class MainActivity extends AppCompatActivity implements AdapterFilmes.cli
         }else{
             return false;
         }
+    }
+
+
+
+    public void setPaddingViewPager() {
+        float density = getResources().getDisplayMetrics().densityDpi;
+        float width = getResources().getDisplayMetrics().widthPixels;
+
+        float widthPerDensity = width / density;
+
+        if (widthPerDensity < 3) {
+            mViewPager.setPadding((int)FeedProcessor.convertDpToPixel(100, getApplicationContext()),
+                    0, (int) convertDpToPixel(100, getApplicationContext()), 0);
+        } else if (widthPerDensity >= 3 && widthPerDensity < 5) {
+            mViewPager.setPadding((int)FeedProcessor.convertDpToPixel(100, getApplicationContext()),
+                    0, (int) convertDpToPixel(100, getApplicationContext()), 0);
+        } else if (widthPerDensity > 5) {
+            mViewPager.setPadding((int)FeedProcessor.convertDpToPixel(100, getApplicationContext()),
+                    0, (int) convertDpToPixel(100, getApplicationContext()), 0);
+        }
+
     }
 
 }

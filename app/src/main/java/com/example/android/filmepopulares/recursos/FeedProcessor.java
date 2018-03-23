@@ -1,14 +1,17 @@
 package com.example.android.filmepopulares.recursos;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.android.filmepopulares.R;
+import com.example.android.filmepopulares.activitys.MainActivity;
 import com.example.android.filmepopulares.connection.NetworkConnection;
 import com.example.android.filmepopulares.model.Movie;
 import com.example.android.filmepopulares.model.Review;
@@ -41,8 +44,6 @@ public class FeedProcessor{
                     for (int i = 0; results.length() > i; i++) {
                         JSONObject jsonObject = results.getJSONObject(i);
                         Movie filme = new Movie(jsonObject);
-                        Uri uriImage = Uri.parse("http://image.tmdb.org").buildUpon()
-                                .path("/t/p/w780"+filme.getUrlImage()).build();
                                 //.encodedQuery(filme.getUrlImage()).build();
                                 //.appendEncodedPath(filme.getUrlImage()).build();
                         /***
@@ -55,9 +56,13 @@ public class FeedProcessor{
                          * carregar as imagens aqui, mas é claro estou aberto para sugestões
                          *  :)
                         ***/
-                        URL urlImage = new URL(uriImage.toString());
-                        Bitmap bitmap = NetworkConnection.getBitmapFromURL(urlImage);
-                        filme.setBitmap(bitmap);
+                        if(filme.getUrlImage() != null && !"".contains(filme.getUrlImage())) {
+                            Uri uriImage = Uri.parse("http://image.tmdb.org").buildUpon()
+                                    .path("/t/p/w780" + filme.getUrlImage()).build();
+                            URL urlImage = new URL(uriImage.toString());
+                            Bitmap bitmap = NetworkConnection.getBitmapFromURL(urlImage);
+                            filme.setBitmap(bitmap);
+                        }
                         resultsFilmes.add(filme);
                     }
                     return resultsFilmes;
@@ -65,9 +70,9 @@ public class FeedProcessor{
                     return null;
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 Log.e("RetornoProcess", e.getMessage(), e);
-                return null;
+                return resultsFilmes;
             }
         } else {
             return null;
@@ -115,6 +120,13 @@ public class FeedProcessor{
         } else {
             return null;
         }
+    }
+
+    public static float convertDpToPixel(float dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px;
     }
 
 }

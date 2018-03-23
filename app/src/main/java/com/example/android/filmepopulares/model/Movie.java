@@ -38,11 +38,14 @@ public class Movie implements Parcelable {
         this.idFilme = idFilme;
     }
 
-    public Movie(JSONObject filme){
+    public Movie(JSONObject filme) throws Exception{
         this.title = filme.optString("title");
-        String[] data = filme.optString("release_date").split("-");
-        this.releaseDate = data[2] + "/" + data[1] + "/" + data[0];
-        this.year = data[0];
+        if (filme.optString("release_date") != null && !"".contains(filme.optString("release_date"))) {
+            String[] data = filme.optString("release_date").split("-");
+            this.releaseDate = data[2] + "/" + data[1] + "/" + data[0];
+            this.year = data[0];
+        }
+
         this.overview = filme.optString("overview");
         this.average = filme.optString("vote_average");
         this.idFilme =  filme.optInt("id");

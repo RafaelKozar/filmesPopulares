@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
+    android:background="@color/colorGray"
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:id="@+id/loading_filmes"
         android:visibility="invisible"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <!--<com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listafilmes"
-         />-->
 
 <!--    <android.support.v7.widget.RecyclerView
         android:id="@+id/listafilmes"
@@ -24,18 +23,15 @@
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>-->
 
+
     <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="330dp"
-        android:layout_gravity="center"
         android:id="@+id/lista_filme_view_pager"
-        android:paddingBottom="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="370dp"
         android:clipToPadding="false"
+        android:elevation="0dp"
+        android:foregroundGravity="center"
+        android:background="@color/colorGray"
+        tools:layout_editor_absoluteX="0dp" />
 
-        android:paddingEnd="@dimen/card_padding"
-        android:paddingLeft="@dimen/card_padding"
-        android:paddingRight="@dimen/card_padding"
-        android:paddingStart="@dimen/card_padding" />
-
-
-</android.support.design.widget.CoordinatorLayout>
+</android.support.constraint.ConstraintLayout>

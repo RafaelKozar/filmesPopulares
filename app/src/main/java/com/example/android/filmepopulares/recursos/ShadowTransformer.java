@@ -3,6 +3,7 @@ package com.example.android.filmepopulares.recursos;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.android.filmepopulares.interfaces.CardAdapter;
 
@@ -26,14 +27,14 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
     public void enableScaling(boolean enable) {
         if (mScalingEnabled && !enable) {
             // shrink main card
-            CardView currentCard = mAdapter.getCardViewAt(mViewPager.getCurrentItem());
+            FrameLayout currentCard = mAdapter.getCardViewAt(mViewPager.getCurrentItem());
             if (currentCard != null) {
                 currentCard.animate().scaleY(1);
                 currentCard.animate().scaleX(1);
             }
         }else if(!mScalingEnabled && enable){
             // grow main card
-            CardView currentCard = mAdapter.getCardViewAt(mViewPager.getCurrentItem());
+            FrameLayout currentCard = mAdapter.getCardViewAt(mViewPager.getCurrentItem());
             if (currentCard != null) {
                 currentCard.animate().scaleY(1.1f);
                 currentCard.animate().scaleX(1.1f);
@@ -74,7 +75,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
             return;
         }
 
-        CardView currentCard = mAdapter.getCardViewAt(realCurrentPosition);
+        FrameLayout currentCard = mAdapter.getCardViewAt(realCurrentPosition);
 
         // This might be null if a fragment is being used
         // and the views weren't created yet
@@ -83,11 +84,11 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
                 currentCard.setScaleX((float) (1 + 0.1 * (1 - realOffset)));
                 currentCard.setScaleY((float) (1 + 0.1 * (1 - realOffset)));
             }
-            currentCard.setCardElevation((baseElevation + baseElevation
+            currentCard.setElevation((baseElevation + baseElevation
                     * (CardAdapter.MAX_ELEVATION_FACTOR - 1) * (1 - realOffset)));
         }
 
-        CardView nextCard = mAdapter.getCardViewAt(nextPosition);
+        FrameLayout nextCard = mAdapter.getCardViewAt(nextPosition);
 
         // We might be scrolling fast enough so that the next (or previous) card
         // was already destroyed or a fragment might not have been created yet
@@ -96,7 +97,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
                 nextCard.setScaleX((float) (1 + 0.1 * (realOffset)));
                 nextCard.setScaleY((float) (1 + 0.1 * (realOffset)));
             }
-            nextCard.setCardElevation((baseElevation + baseElevation
+            nextCard.setElevation((baseElevation + baseElevation
                     * (CardAdapter.MAX_ELEVATION_FACTOR - 1) * (realOffset)));
         }
 

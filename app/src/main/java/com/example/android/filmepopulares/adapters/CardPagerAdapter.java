@@ -6,9 +6,11 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.filmepopulares.R;
 import com.example.android.filmepopulares.interfaces.CardAdapter;
 import com.example.android.filmepopulares.model.CardItem;
@@ -66,9 +68,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter{
         CardView cardView = (CardView) view.findViewById(R.id.filme_card);
 
         if (mBaseElevation == 0) {
-            mBaseElevation = cardView.getCardElevation();
+            mBaseElevation = cardView.getElevation();
         }
-
+        cardView.setUseCompatPadding(false);
+//        FrameLayout frameLayout; frameLayout.setEle
         cardView.setMaxCardElevation(mBaseElevation * MAX_ELEVATION_FACTOR);
         mViews.set(position, cardView);
         return view;
@@ -86,7 +89,12 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter{
         ImageView btnFavoritar = (ImageView) view.findViewById(R.id.button_favoritar);
 
         titleTextView.setText(item.getTitle());
-        imageView.setImageBitmap(item.getImgBitmap());
+        if (item.getImgBitmap() != null) {
+            imageView.setImageBitmap(item.getImgBitmap());
+        } else {
+            Glide.with(view.getContext()).load(R.drawable.loading)
+                    .into(imageView);
+        }
         if (item.isFavorito()) {
             btnFavoritar.setImageResource(R.drawable.img_favorito_green);
         } else {
